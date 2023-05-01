@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/services/task.dart';
+import 'package:todoey_flutter/models/task.dart';
 
 class TaskTile extends StatelessWidget {
   final Task task;
@@ -15,11 +15,11 @@ class TaskTile extends StatelessWidget {
         style: TextStyle(
           fontSize: 20.0,
           decoration:
-              task.status ? TextDecoration.lineThrough : TextDecoration.none,
+              task.isDone ? TextDecoration.lineThrough : TextDecoration.none,
         ),
       ),
       trailing: Checkbox(
-        value: task.status,
+        value: task.isDone,
         onChanged: onCheckboxToggle,
       ),
     );
