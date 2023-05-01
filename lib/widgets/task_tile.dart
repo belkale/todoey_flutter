@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:todoey_flutter/services/task.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile({
-    super.key,
-    required this.task,
-  });
   final Task task;
+  final void Function(bool?) onCheckboxToggle;
+  const TaskTile(
+      {super.key, required this.task, required this.onCheckboxToggle});
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -20,7 +20,7 @@ class TaskTile extends StatelessWidget {
       ),
       trailing: Checkbox(
         value: task.status,
-        onChanged: (value) {},
+        onChanged: onCheckboxToggle,
       ),
     );
   }

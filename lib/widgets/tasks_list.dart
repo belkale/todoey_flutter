@@ -3,19 +3,33 @@ import 'package:todoey_flutter/services/task.dart';
 
 import 'task_tile.dart';
 
-class TasksList extends StatelessWidget {
-  const TasksList({
+class TasksList extends StatefulWidget {
+  TasksList({
     super.key,
     required this.taskList,
   });
 
-  final List<Task> taskList;
+  List<Task> taskList;
 
+  @override
+  State<TasksList> createState() => _TasksListState();
+}
+
+class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(30.0),
-      children: taskList.map((task) => TaskTile(task: task)).toList(),
+      children: widget.taskList
+          .map((task) => TaskTile(
+                task: task,
+                onCheckboxToggle: (bool? value) {
+                  setState(() {
+                    task.status = value!;
+                  });
+                },
+              ))
+          .toList(),
     );
   }
 }
