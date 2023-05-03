@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 
 import 'add_task_screen.dart';
 
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk', isDone: false),
-    Task(name: 'Buy eggs', isDone: false),
-    Task(name: 'Buy bread', isDone: true)
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +39,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Text('${tasks.length} Tasks',
+                Text('${context.watch<TaskData>().taskCount} Tasks',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,
@@ -65,7 +55,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0)),
               ),
-              child: TasksList(tasks: tasks),
+              child: const TasksList(),
             ),
           ),
         ],
@@ -74,14 +64,7 @@ class _TasksScreenState extends State<TasksScreen> {
         backgroundColor: Colors.lightBlueAccent,
         onPressed: () {
           showModalBottomSheet(
-              context: context,
-              builder: (context) => AddTaskScreen(
-                    onAdd: (taskName) {
-                      setState(() {
-                        tasks.add(Task(name: taskName));
-                      });
-                    },
-                  ));
+              context: context, builder: (context) => const AddTaskScreen());
         },
         child: const Icon(Icons.add),
       ),
